@@ -20,6 +20,8 @@ async function main() {
     console.log("Connected to the scheduler database.");
   });
 
+  db.run('CREATE TABLE IF NOT EXISTS "Schedules" ("scheduleId"	INTEGER NOT NULL UNIQUE, "title"	TEXT NOT NULL, "description"	TEXT, "priority"	TEXT, "startDate"	TEXT, "startTime"	TEXT, "endDate"	TEXT, "endTime"	TEXT, "recurrenceRule"	TEXT, "isCompleted"	INTEGER, PRIMARY KEY("scheduleId" AUTOINCREMENT))')
+
   app.get("/schedules", (req, res) => {
     const sql = "SELECT * FROM Schedules";
 
