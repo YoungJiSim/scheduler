@@ -1,5 +1,3 @@
-const API_URL = "http://localhost:3000";
-
 init();
 
 function init() {
@@ -186,7 +184,7 @@ function changeMonth(self) {
 
 async function getSchedules() {
   const response = await $.ajax({
-    url: `${API_URL}/schedules`,
+    url: `/schedules`,
     error: (error) => console.log(error),
   });
   return response;
@@ -294,7 +292,7 @@ function modalBtnsControl(modalBtnId) {
 
 async function getSchedule(scheduleId) {
   const response = await $.ajax({
-    url: `${API_URL}/schedule/${scheduleId}`,
+    url: `/schedule/${scheduleId}`,
     error: (error) => console.log(error),
   });
   return response;
@@ -385,7 +383,7 @@ function addSchedule() {
   const schedule = readScheduleForm();
   $.ajax({
     type: "POST",
-    url: `${API_URL}/schedule`,
+    url: `/schedule`,
     data: JSON.stringify(schedule),
     dataType: "json",
     contentType: "application/json; charset=utf-8",
@@ -403,7 +401,7 @@ function updateSchedule(scheduleId) {
   const schedule = readScheduleForm();
   $.ajax({
     type: "PUT",
-    url: `${API_URL}/schedule/${scheduleId}`,
+    url: `/schedule/${scheduleId}`,
     data: JSON.stringify(schedule),
     dataType: "json",
     contentType: "application/json; charset=utf-8",
@@ -424,7 +422,7 @@ function deleteSchedule(scheduleId) {
   if (userAnswer) {
     $.ajax({
       type: "DELETE",
-      url: `${API_URL}/schedule/${scheduleId}`,
+      url: `/schedule/${scheduleId}`,
       success: (response) => console.log(response.data),
       complete: () => {
         document.getElementById("scheduleModalCloseBtn").click();
