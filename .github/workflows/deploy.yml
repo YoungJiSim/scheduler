@@ -21,4 +21,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/scheduler
-            git pull origin main
+            ./deploy.sh
