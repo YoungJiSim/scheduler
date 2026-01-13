@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+  margin: 5px;
+}
+span,
+a {
+  margin: 0px;
+}
+table {
+  border: 1px solid #b5b6b7 !important;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+tr {
+  border: 1px solid #dee2e6 !important;
+}
+th {
+  border: 1px solid #dee2e6 !important;
+  background-color: #e2e3e5;
+  font-weight: normal;
+}
+td {
+  border: 1px solid #dee2e6 !important;
+  font-size: small;
+  height: 80px;
+  position: relative;
+}
+#contentsDiv {
+  margin-top: 30px;
+}
+#calendarDiv {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#calendarHeader {
+  display: grid;
+  grid-template-columns: 30% auto 30%;
+  align-items: end;
+}
+#calendarHeaderCenterDiv {
+  justify-self: center;
+  display: flex;
+  flex-direction: row;
+}
+#calendarYearMonth {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+#calendarHeaderRightDiv {
+  justify-self: right;
+}
+.calendarDateDivs {
+  margin: 0px;
+  padding: 0px !important;
+  text-align: right;
+  position: absolute;
+  top: 5px;
+  right: 8px;
+}
+.scheduleTitleDivs {
+  margin: 0px;
+  padding: 0px !important;
+  text-align: left;
+}
+.scheduleTitleDivs button {
+  margin: 0px;
+  padding: 0px 5px;
+}
+.modalBtnsDivs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.confirmModalBtnsDiv {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}

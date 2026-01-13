@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scheduler</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- fontAwesome -->
+    <script
+      src="https://kit.fontawesome.com/2043d6ea2c.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body class="container">
+    <!-- Header -->
+    <header></header>
+    <!-- Main Body -->
+    <main id="mainBody">
+      <div id="contentsDiv">
+        <div id="calendarHeader">
+          <div id="calendarHeaderLeftDiv">
+            <button id="todayBtn" class="btn btn-sm btn-outline-dark">
+              Today
+            </button>
+          </div>
+          <div id="calendarHeaderCenterDiv">
+            <button id="prevMonth" class="monthBtns btn btn-sm">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div id="calendarYearMonth">
+              <span id="calendarYear">year</span>
+              <span id="calendarMonth">month</span>
+            </div>
+            <button id="nextMonth" class="monthBtns btn btn-sm">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div id="calendarHeaderRightDiv">
+            <button id="addScheduleBtn" class="btn btn-sm btn-outline-dark">
+              Add Schedule
+            </button>
+          </div>
+        </div>
+        <div id="calendarDiv">
+          <table id="calendar" class="table"></table>
+        </div>
+      </div>
+      <!-- Schedule Modal -->
+      <div id="scheduleModal" class="modal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <!-- Schedule Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Schedule</h4>
+              <button
+                type="button"
+                id="scheduleModalCloseBtn"
+                class="btn-close"
+              ></button>
+            </div>
+
+            <!-- Schedule Modal Body -->
+            <form id="scheduleForm" onsubmit="return false">
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <label for="title" class="form-label">Title</label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="priority" class="form-label">Priority</label>
+                    <select name="priority" id="priority" class="form-select">
+                      <option value="none">No Priority</option>
+                      <option value="high">High</option>
+                      <option value="medium">Medium</option>
+                      <option value="low">Low</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="recurrenceRule" class="form-label"
+                      >Repetition</label
+                    >
+                    <select
+                      name="recurrenceRule"
+                      id="recurrenceRule"
+                      class="form-select"
+                    >
+                      <option value="none">No Repeat</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="biweekly">Biweekly</option>
+                      <option value="monthly">Monthly</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="startDate">Start Date</label>
+                    <input
+                      type="date"
+                      id="startDate"
+                      name="startDate"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="endDate">End Date</label>
+                    <input
+                      type="date"
+                      id="endDate"
+                      name="endDate"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="startTime">Start Time</label>
+                    <input
+                      type="time"
+                      id="startTime"
+                      name="startTime"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="endTime">End Time</label>
+                    <input
+                      type="time"
+                      id="endTime"
+                      name="endTime"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="description" class="form-label"
+                      >Description</label
+                    >
+                    <textarea
+                      id="description"
+                      name="description"
+                      class="form-control"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- Schedule Modal Footer -->
+              <div class="modal-footer">
+                <div id="modalAddScheduleBtns" class="modalBtnsDivs">
+                  <input
+                    id="scheduleModalResetBtn"
+                    type="reset"
+                    class="btn btn-outline-dark"
+                  />
+                  <input
+                    id="scheduleModalSubmitBtn"
+                    type="submit"
+                    value="Add Schedule"
+                    class="btn btn-dark"
+                  />
+                </div>
+                <div
+                  id="modalShowScheduleBtnsDiv"
+                  class="modalBtnsDivs visually-hidden"
+                >
+                  <input
+                    id="scheduleModalDeleteBtn"
+                    type="submit"
+                    value="Delete Schedule"
+                    class="btn btn-danger"
+                  />
+
+                  <input
+                    id="scheduleModalEditBtn"
+                    type="submit"
+                    value="Edit Schedule"
+                    class="btn btn-outline-dark"
+                  />
+                </div>
+                <div
+                  id="modalUpdateScheduleBtnsDiv"
+                  class="modalBtnsDivs visually-hidden"
+                >
+                  <input
+                    id="scheduleModalCancelBtn"
+                    type="submit"
+                    value="Cancel"
+                    class="btn btn-danger"
+                  />
+                  <input
+                    id="scheduleModalEditSaveBtn"
+                    type="submit"
+                    value="Save Schedule"
+                    class="btn btn-dark"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Confirm Modal -->
+      <div id="confirmModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <div id="confirmModalBtnsDiv">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  YES
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  NO
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- JavaScript -->
+    <script src="./js/script.js"></script>
+  </body>
+</html>
