@@ -11,22 +11,24 @@ main().catch((error) => console.log(error));
 
 async function main() {
   app.listen(PORT, () => {
-    console.log(`Server is running`);
+    logger(`Server is running`);
   });
 
   // open database
   const db = new sqlite3.Database("./db/scheduler.db", (error) => {
     if (error) console.error(error.message);
-    console.log("Connected to the scheduler database.");
+    logger("Connected to the scheduler database.");
   });
 
-  db.run('CREATE TABLE IF NOT EXISTS "Schedules" ("scheduleId"	INTEGER NOT NULL UNIQUE, "title"	TEXT NOT NULL, "description"	TEXT, "priority"	TEXT, "startDate"	TEXT, "startTime"	TEXT, "endDate"	TEXT, "endTime"	TEXT, "recurrenceRule"	TEXT, "isCompleted"	INTEGER, PRIMARY KEY("scheduleId" AUTOINCREMENT))')
+  db.run(
+    'CREATE TABLE IF NOT EXISTS "Schedules" ("scheduleId"	INTEGER NOT NULL UNIQUE, "title"	TEXT NOT NULL, "description"	TEXT, "priority"	TEXT, "startDate"	TEXT, "startTime"	TEXT, "endDate"	TEXT, "endTime"	TEXT, "recurrenceRule"	TEXT, "isCompleted"	INTEGER, PRIMARY KEY("scheduleId" AUTOINCREMENT))'
+  );
 
   app.get("/schedules", (req, res) => {
     const sql = "SELECT * FROM Schedules";
 
     db.all(sql, (error, rows) => {
-      if (error) console.log(error.message);
+      if (error) logger(error.message);
       res.send(rows);
     });
   });
@@ -36,7 +38,7 @@ async function main() {
     const sql = `SELECT * FROM Schedules WHERE scheduleId == ${scheduleId}`;
 
     db.get(sql, (error, row) => {
-      if (error) console.log(error.message);
+      if (error) logger(error.message);
       res.send(row);
     });
   });
@@ -59,13 +61,11 @@ async function main() {
 
     db.run(sql, function (error) {
       if (error) {
-        console.log(error.message);
+        logger(error.message);
         res.status(400).send(error.message);
       }
       const scheduleId = this.lastID;
-      console.log(
-        `A row has been inserted to Schedules with rowid ${scheduleId}`
-      );
+      logger(`A row has been inserted to Schedules with rowid ${scheduleId}`);
     });
     res.status(201).send("sucessfully added");
   });
@@ -89,10 +89,10 @@ async function main() {
 
     db.run(sql, function (error) {
       if (error) {
-        console.log(error.message);
+        logger(error.message);
         res.status(400).send(error.message);
       }
-      console.log(`A row updated: ${this.changes}`);
+      logger(`A row updated: ${this.changes}`);
     });
     res.status(200).send("sucessfully updated");
   });
@@ -103,10 +103,10 @@ async function main() {
 
     db.run(sql, function (error) {
       if (error) {
-        console.log(error.message);
+        logger(error.message);
         res.status(400).send(error.message);
       }
-      console.log(`A row deleted: ${this.changes}`);
+      logger(`A row deleted: ${this.changes}`);
     });
     res.status(200).send("sucessfully deleted");
   });
@@ -115,8 +115,19 @@ async function main() {
     // close the database connection
     db.close((error) => {
       if (error) return console.error(error.message);
-      console.log("Close the database connection.");
+      logger("Close the database connection.");
       process.exit(error ? 1 : 0);
     });
   });
+}
+
+function logger(message) {
+  const now = new Date();
+  const timestamp = now
+    .toLocaleString("en-CA", {
+      timeZone: "America/Vancouver",
+      hour12: false,
+    })
+    .replace(",", "");
+  console.log(`[${timestamp}] ${message}`);
 }
